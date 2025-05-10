@@ -1,0 +1,10 @@
+package com.jatinjain.SkillLink.repository;
+
+import com.jatinjain.SkillLink.models.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Optional;
+
+public interface AuthRepository extends MongoRepository<User, String>{
+    Optional<User> findByEmail(String email);
+}
