@@ -23,29 +23,29 @@ public class AuthController {
     @CrossOrigin
     public ResponseEntity<AuthResponse> signup(@RequestBody AuthRequest request) {
         try {
-            String userId = authService.addUser(request);
+            AuthResponse response = authService.addUser(request);
             return new ResponseEntity<>(
-                    new AuthResponse(userId),
+                    response,
                     HttpStatus.OK
             );
         } catch(DuplicateKeyException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage()),
+                    new AuthResponse(e.getMessage(), null, null),
                     HttpStatus.CONFLICT
             );
         } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage()),
+                    new AuthResponse(e.getMessage(), null, null),
                     HttpStatus.BAD_REQUEST
             );
         } catch (RuntimeException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage()),
+                    new AuthResponse(e.getMessage(), null, null),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new AuthResponse("unexpected error occurred: "+ e.getMessage()),
+                    new AuthResponse("unexpected error occurred: "+ e.getMessage(), null, null),
                     HttpStatus.SERVICE_UNAVAILABLE
             );
         }
@@ -55,24 +55,24 @@ public class AuthController {
     @CrossOrigin
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         try {
-            String status = authService.validateUser(request);
+            AuthResponse response = authService.validateUser(request);
             return new ResponseEntity<>(
-                    new AuthResponse(status),
+                    response,
                     HttpStatus.OK
             );
         } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage()),
+                    new AuthResponse(e.getMessage(), null, null),
                     HttpStatus.BAD_REQUEST
             );
         } catch (RuntimeException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage()),
+                    new AuthResponse(e.getMessage(), null, null),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new AuthResponse("unexpected error occurred: "+ e.getMessage()),
+                    new AuthResponse(e.getMessage(), null, null),
                     HttpStatus.SERVICE_UNAVAILABLE
             );
         }

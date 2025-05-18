@@ -1,6 +1,7 @@
 package com.jatinjain.SkillLink.services;
 
 import com.jatinjain.SkillLink.models.User;
+import com.jatinjain.SkillLink.models.userReponses.AuthResponse;
 import com.jatinjain.SkillLink.repository.AuthRepository;
 import com.jatinjain.SkillLink.models.userRequests.AuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String addUser(AuthRequest request) throws Exception {
+    public AuthResponse addUser(AuthRequest request) throws Exception {
         String email = request.getEmail();
         String password = request.getPassword();
 
@@ -44,22 +45,24 @@ public class AuthService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setUserName("");
+        user.setRealName("");
         user.setSpin(-1);
+        user.setBio("");
 
         try {
             authRepo.save(user);
-            return user.getId();
+            return new AuthResponse("user successfully registered", user.getId(), user.getEmail());
         } catch (Exception e) {
             throw new RuntimeException("database error: "+ e.getMessage());
         }
     }
 
-    public String validateUser(AuthRequest request) throws Exception {
+    public AuthResponse validateUser(AuthRequest request) throws Exception {
         String email = request.getEmail();
         String password = request.getPassword();
 
         if(email.isBlank() || password.isBlank()) {
-            throw new IllegalArgumentException("email can password cannot be empty");
+            throw new IllegalArgumentException("email and password cannot be empty");
         }
 
         if(!email.matches(EMAIL_REGEX)) {
@@ -70,12 +73,12 @@ public class AuthService {
             return authRepo.findByEmail(email)
                     .map(user -> {
                         if(passwordEncoder.matches(password, user.getPassword())) {
-                              return user.getId();
+                            return new AuthResponse("Welcome Back !!", user.getId(), user.getEmail());
                         } else {
-                            return "bad credentials";
+                            return new AuthResponse("wrong credentials", null, null);
                         }
                     })
-                    .orElse("user not registered");
+                    .orElse(new AuthResponse("user not registered", null, null));
         } catch (Exception e) {
             throw new RuntimeException("database error: "+ e.getMessage());
         }
