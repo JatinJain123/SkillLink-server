@@ -30,22 +30,22 @@ public class AuthController {
             );
         } catch(DuplicateKeyException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.CONFLICT
             );
         } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.BAD_REQUEST
             );
         } catch (RuntimeException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new AuthResponse("unexpected error occurred: "+ e.getMessage(), null, null),
+                    new AuthResponse(false, "unexpected error occurred: "+ e.getMessage(), null, null),
                     HttpStatus.SERVICE_UNAVAILABLE
             );
         }
@@ -62,17 +62,17 @@ public class AuthController {
             );
         } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.BAD_REQUEST
             );
         } catch (RuntimeException e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new AuthResponse(e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.SERVICE_UNAVAILABLE
             );
         }

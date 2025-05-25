@@ -51,7 +51,7 @@ public class AuthService {
 
         try {
             authRepo.save(user);
-            return new AuthResponse("user successfully registered", user.getId(), user.getEmail());
+            return new AuthResponse(true,"user successfully registered", user.getId(), user.getEmail());
         } catch (Exception e) {
             throw new RuntimeException("database error: "+ e.getMessage());
         }
@@ -73,12 +73,12 @@ public class AuthService {
             return authRepo.findByEmail(email)
                     .map(user -> {
                         if(passwordEncoder.matches(password, user.getPassword())) {
-                            return new AuthResponse("Welcome Back !!", user.getId(), user.getEmail());
+                            return new AuthResponse(true, "Welcome Back !!", user.getId(), user.getEmail());
                         } else {
-                            return new AuthResponse("wrong credentials", null, null);
+                            return new AuthResponse(false, "wrong credentials", null, null);
                         }
                     })
-                    .orElse(new AuthResponse("user not registered", null, null));
+                    .orElse(new AuthResponse(false,"user not registered", null, null));
         } catch (Exception e) {
             throw new RuntimeException("database error: "+ e.getMessage());
         }

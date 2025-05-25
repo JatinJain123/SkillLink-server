@@ -1,14 +1,24 @@
 package com.jatinjain.SkillLink.models.userReponses;
 
 public class AuthResponse {
+    private boolean success;
     private String message;
     private String userId;
     private String email;
 
-    public AuthResponse(String message, String userId, String email) {
+    public AuthResponse(boolean success, String message, String userId, String email) {
+        this.success = success;
         this.message = message;
         this.userId = userId;
         this.email = email;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public String getMessage() {
