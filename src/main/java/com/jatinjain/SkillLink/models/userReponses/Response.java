@@ -1,12 +1,12 @@
 package com.jatinjain.SkillLink.models.userReponses;
 
-public class AuthResponse {
+public class Response {
     private boolean success;
     private String message;
     private String userId;
     private String email;
 
-    public AuthResponse(boolean success, String message, String userId, String email) {
+    public Response(boolean success, String message, String userId, String email) {
         this.success = success;
         this.message = message;
         this.userId = userId;

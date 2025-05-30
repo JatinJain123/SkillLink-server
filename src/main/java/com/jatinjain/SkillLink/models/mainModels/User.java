@@ -1,4 +1,4 @@
-package com.jatinjain.SkillLink.models;
+package com.jatinjain.SkillLink.models.mainModels;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class User {
     @Id
     private String id;
-    private String userName;
+    private String username;
     private String realName;
     private String email;
     private String password;
@@ -20,9 +20,9 @@ public class User {
 
     public User() {}
 
-    public User(String id, String userName, String realName, String email, String password, int spin, String bio) {
+    public User(String id, String username, String realName, String email, String password, int spin, String bio) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.realName = realName;
         this.email = email;
         this.password = password;
@@ -40,12 +40,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getRealName() {
