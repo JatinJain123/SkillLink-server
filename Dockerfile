@@ -1,14 +1,16 @@
-# Use OpenJDK 17 with Alpine Linux (small image)
+# Stage 1: Build the application
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS builder
+
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the application
 FROM openjdk:17-jdk-alpine
 
-# Set working directory inside the container
 WORKDIR /app
+COPY --from=builder /app/target/SkillLink-0.0.1-SNAPSHOT.jar app.jar
 
-# Copy the jar file into the container
-COPY target/SkillLink-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose port 8080 (Spring Boot default)
 EXPOSE 8080
 
-# Run the Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]
