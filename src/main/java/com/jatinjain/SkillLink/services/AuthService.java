@@ -1,7 +1,7 @@
 package com.jatinjain.SkillLink.services;
 
 import com.jatinjain.SkillLink.models.mainModels.User;
-import com.jatinjain.SkillLink.models.userReponses.Response;
+import com.jatinjain.SkillLink.models.userReponses.AuthResponse;
 import com.jatinjain.SkillLink.models.userRequests.auth.SetSecretPinRequest;
 import com.jatinjain.SkillLink.models.userRequests.auth.SetUsernameRequest;
 import com.jatinjain.SkillLink.repository.AuthRepository;
@@ -11,7 +11,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -27,7 +26,7 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Response addUser(LoginRequest request) throws Exception {
+    public AuthResponse addUser(LoginRequest request) throws Exception {
         String email = request.getEmail();
         String password = request.getPassword();
 
@@ -49,18 +48,18 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setUsername("");
         user.setRealName("");
-        user.setSpin(-1);
+        user.setSecretPin(-1);
         user.setBio("");
 
         try {
             authRepo.save(user);
-            return new Response(true,"user successfully registered", user.getId(), user.getEmail());
+            return new AuthResponse(true,"user successfully registered", user.getId(), user.getEmail());
         } catch (Exception e) {
             throw new RuntimeException("database error: "+ e.getMessage());
         }
     }
 
-    public Response validateUser(LoginRequest request) throws Exception {
+    public AuthResponse validateUser(LoginRequest request) throws Exception {
         String email = request.getEmail();
         String password = request.getPassword();
 
@@ -76,21 +75,21 @@ public class AuthService {
             return authRepo.findByEmail(email)
                     .map(user -> {
                         if(passwordEncoder.matches(password, user.getPassword())) {
-                            return new Response(true, "Welcome Back !!", user.getId(), user.getEmail());
+                            return new AuthResponse(true, "Welcome Back !!", user.getId(), user.getEmail());
                         } else {
-                            return new Response(false, "wrong credentials", null, null);
+                            return new AuthResponse(false, "wrong credentials", null, null);
                         }
                     })
-                    .orElse(new Response(false,"user is not registered", null, null));
+                    .orElse(new AuthResponse(false,"user is not registered", null, null));
         } catch (Exception e) {
             throw new RuntimeException("database error: "+ e.getMessage());
         }
     }
 
-    public Response setUsername(SetUsernameRequest request) throws Exception {
+    public AuthResponse setUsername(SetUsernameRequest request) throws Exception {
         String userId = request.getUserId();
         String email = request.getEmail();
-        String username = request.getUserName();
+        String username = request.getUsername();
 
         if(email.isBlank() || userId.isBlank() || username.isBlank()) {
             throw new IllegalArgumentException("credentials cannot be empty");
@@ -106,18 +105,18 @@ public class AuthService {
                         if(userId.equals(user.getId())) {
                             user.setUsername(username);
                             authRepo.save(user);
-                            return new Response(true, "username added successfully", null, null);
+                            return new AuthResponse(true, "username added successfully", null, null);
                         } else {
-                            return new Response(false, "credentials did not match", null, null);
+                            return new AuthResponse(false, "credentials did not match", null, null);
                         }
                     })
-                    .orElse(new Response(false, "user is not registered", null, null));
+                    .orElse(new AuthResponse(false, "user is not registered", null, null));
         } catch (Exception e) {
             throw new RuntimeException("database error: "+ e.getMessage());
         }
     }
 
-    public Response setSpin(SetSecretPinRequest request) throws Exception {
+    public AuthResponse setSecretPin(SetSecretPinRequest request) throws Exception {
         String userId = request.getUserId();
         String email = request.getEmail();
         int secretPin = request.getSecretPin();
@@ -138,14 +137,14 @@ public class AuthService {
             return authRepo.findByEmail(email)
                     .map(user -> {
                         if(userId.equals(user.getId())) {
-                            user.setSpin(secretPin);
+                            user.setSecretPin(secretPin);
                             authRepo.save(user);
-                            return new Response(true, "secret pin added successfully", null, null);
+                            return new AuthResponse(true, "secret pin added successfully", null, null);
                         } else {
-                            return new Response(false, "credentials did not match", null, null);
+                            return new AuthResponse(false, "credentials did not match", null, null);
                         }
                     })
-                    .orElse(new Response(false, "user is not registered", null, null));
+                    .orElse(new AuthResponse(false, "user is not registered", null, null));
         } catch (Exception e) {
             throw new RuntimeException("database error: "+ e.getMessage());
         }

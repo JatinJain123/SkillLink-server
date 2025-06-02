@@ -3,12 +3,12 @@ package com.jatinjain.SkillLink.models.userRequests.auth;
 public class SetUsernameRequest {
     private String userId;
     private String email;
-    private String userName;
+    private String username;
 
-    public SetUsernameRequest(String userId, String email, String userName) {
+    public SetUsernameRequest(String userId, String email, String username) {
         this.userId = userId;
         this.email = email;
-        this.userName = userName;
+        this.username = username;
     }
 
     public String getUserId() {
@@ -27,11 +27,11 @@ public class SetUsernameRequest {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 }

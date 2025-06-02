@@ -3,7 +3,7 @@ package com.jatinjain.SkillLink.controllers;
 import com.jatinjain.SkillLink.models.userRequests.auth.SetSecretPinRequest;
 import com.jatinjain.SkillLink.models.userRequests.auth.SetUsernameRequest;
 import com.jatinjain.SkillLink.services.AuthService;
-import com.jatinjain.SkillLink.models.userReponses.Response;
+import com.jatinjain.SkillLink.models.userReponses.AuthResponse;
 import com.jatinjain.SkillLink.models.userRequests.auth.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -23,28 +23,28 @@ public class AuthController {
 
     @PostMapping("/signup")
     @CrossOrigin
-    public ResponseEntity<Response> signup(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> signup(@RequestBody LoginRequest request) {
         try {
-            Response response = authService.addUser(request);
-            return ResponseEntity.ok(response);
+            AuthResponse authResponse = authService.addUser(request);
+            return ResponseEntity.ok(authResponse);
         } catch(DuplicateKeyException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.CONFLICT
             );
         } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.BAD_REQUEST
             );
         } catch (RuntimeException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new Response(false, "unexpected error occurred: "+ e.getMessage(), null, null),
+                    new AuthResponse(false, "unexpected error occurred: "+ e.getMessage(), null, null),
                     HttpStatus.SERVICE_UNAVAILABLE
             );
         }
@@ -52,23 +52,23 @@ public class AuthController {
 
     @PostMapping("/login")
     @CrossOrigin
-    public ResponseEntity<Response> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         try {
-            Response response = authService.validateUser(request);
-            return ResponseEntity.ok(response);
+            AuthResponse authResponse = authService.validateUser(request);
+            return ResponseEntity.ok(authResponse);
         } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.BAD_REQUEST
             );
         } catch (RuntimeException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.SERVICE_UNAVAILABLE
             );
         }
@@ -76,47 +76,47 @@ public class AuthController {
 
     @PostMapping("/setUsername")
     @CrossOrigin
-    public ResponseEntity<Response> setUsername(@RequestBody SetUsernameRequest request) {
+    public ResponseEntity<AuthResponse> setUsername(@RequestBody SetUsernameRequest request) {
         try {
-            Response response = authService.setUsername(request);
-            return ResponseEntity.ok(response);
+            AuthResponse authResponse = authService.setUsername(request);
+            return ResponseEntity.ok(authResponse);
         } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.BAD_REQUEST
             );
         } catch (RuntimeException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.SERVICE_UNAVAILABLE
             );
         }
     }
 
-    @PostMapping("/setSpin")
+    @PostMapping("/setSecretPin")
     @CrossOrigin
-    public ResponseEntity<Response> setSpin(@RequestBody SetSecretPinRequest request) {
+    public ResponseEntity<AuthResponse> setSecretPin(@RequestBody SetSecretPinRequest request) {
         try {
-            Response response = authService.setSpin(request);
-            return ResponseEntity.ok(response);
+            AuthResponse authResponse = authService.setSecretPin(request);
+            return ResponseEntity.ok(authResponse);
         } catch(IllegalArgumentException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.BAD_REQUEST
             );
         } catch (RuntimeException e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
-                    new Response(false, e.getMessage(), null, null),
+                    new AuthResponse(false, e.getMessage(), null, null),
                     HttpStatus.SERVICE_UNAVAILABLE
             );
         }

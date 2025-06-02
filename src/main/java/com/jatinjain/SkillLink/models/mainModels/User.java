@@ -13,20 +13,20 @@ public class User {
     private String realName;
     private String email;
     private String password;
-    private int spin;
+    private int secretPin;
     private String bio;
     private ArrayList<String> followersId;
     private ArrayList<String> followingId;
 
     public User() {}
 
-    public User(String id, String username, String realName, String email, String password, int spin, String bio) {
+    public User(String id, String username, String realName, String email, String password, int secretPin, String bio) {
         this.id = id;
         this.username = username;
         this.realName = realName;
         this.email = email;
         this.password = password;
-        this.spin = spin;
+        this.secretPin = secretPin;
         this.bio = bio;
         this.followersId = new ArrayList<>();
         this.followingId = new ArrayList<>();
@@ -72,12 +72,12 @@ public class User {
         this.password = password;
     }
 
-    public int getSpin() {
-        return spin;
+    public int getSecretPin() {
+        return secretPin;
     }
 
-    public void setSpin(int spin) {
-        this.spin = spin;
+    public void setSecretPin(int secretPin) {
+        this.secretPin = secretPin;
     }
 
     public String getBio() {
