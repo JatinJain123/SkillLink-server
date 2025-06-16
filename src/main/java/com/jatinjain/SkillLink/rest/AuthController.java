@@ -1,4 +1,4 @@
-package com.jatinjain.SkillLink.controllers;
+package com.jatinjain.SkillLink.rest;
 
 import com.jatinjain.SkillLink.models.userRequests.auth.SetSecretPinRequest;
 import com.jatinjain.SkillLink.models.userRequests.auth.SetUsernameRequest;
@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @CrossOrigin
 public class AuthController {
     final private AuthService authService;
