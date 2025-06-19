@@ -1,6 +1,6 @@
-package com.jatinjain.SkillLink.repositories;
+package com.jatinjain.SkillLink.repository;
 
-import com.jatinjain.SkillLink.models.mainModels.User;
+import com.jatinjain.SkillLink.model.entity.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

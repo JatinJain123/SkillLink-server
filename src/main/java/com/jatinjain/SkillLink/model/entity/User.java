@@ -1,4 +1,4 @@
-package com.jatinjain.SkillLink.models.mainModels;
+package com.jatinjain.SkillLink.model.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

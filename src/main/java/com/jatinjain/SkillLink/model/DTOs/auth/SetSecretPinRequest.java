@@ -1,4 +1,4 @@
-package com.jatinjain.SkillLink.models.userRequests.auth;
+package com.jatinjain.SkillLink.model.DTOs.auth;
 
 public class SetSecretPinRequest {
     private String userId;

@@ -1,4 +1,4 @@
-package com.jatinjain.SkillLink.models.userReponses;
+package com.jatinjain.SkillLink.model.DTOs.auth;
 
 public class AuthResponse {
     private boolean success;

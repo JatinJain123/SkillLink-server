@@ -1,6 +1,8 @@
-package com.jatinjain.SkillLink.exceptions;
+package com.jatinjain.SkillLink.exceptionHandling;
 
-import com.jatinjain.SkillLink.models.userReponses.AuthResponse;
+import com.jatinjain.SkillLink.exceptionHandling.exceptions.UserNotRegisteredException;
+import com.jatinjain.SkillLink.exceptionHandling.exceptions.WrongCredentialsException;
+import com.jatinjain.SkillLink.model.DTOs.auth.AuthResponse;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

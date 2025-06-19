@@ -1,13 +1,13 @@
-package com.jatinjain.SkillLink.services;
+package com.jatinjain.SkillLink.service;
 
-import com.jatinjain.SkillLink.exceptions.UserNotRegisteredException;
-import com.jatinjain.SkillLink.exceptions.WrongCredentialsException;
-import com.jatinjain.SkillLink.models.mainModels.User;
-import com.jatinjain.SkillLink.models.userReponses.AuthResponse;
-import com.jatinjain.SkillLink.models.userRequests.auth.SetSecretPinRequest;
-import com.jatinjain.SkillLink.models.userRequests.auth.SetUsernameRequest;
-import com.jatinjain.SkillLink.repositories.UserRepository;
-import com.jatinjain.SkillLink.models.userRequests.auth.LoginRequest;
+import com.jatinjain.SkillLink.exceptionHandling.exceptions.UserNotRegisteredException;
+import com.jatinjain.SkillLink.exceptionHandling.exceptions.WrongCredentialsException;
+import com.jatinjain.SkillLink.model.entity.User;
+import com.jatinjain.SkillLink.model.DTOs.auth.AuthResponse;
+import com.jatinjain.SkillLink.model.DTOs.auth.SetSecretPinRequest;
+import com.jatinjain.SkillLink.model.DTOs.auth.SetUsernameRequest;
+import com.jatinjain.SkillLink.repository.UserRepository;
+import com.jatinjain.SkillLink.model.DTOs.auth.LoginRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,11 +28,12 @@ public class AuthServiceImpl implements AuthService{
         this.passwordEncoder = passwordEncoder;
     }
 
-    public AuthResponse addUser(LoginRequest request) {
+    public AuthResponse signup(LoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
 
-        if(email.isBlank() || password.isBlank()) {
+        if(email == null || password == null ||
+                email.isBlank() || password.isBlank()) {
             throw new IllegalArgumentException("email and password cannot be empty");
         }
 
@@ -57,11 +58,12 @@ public class AuthServiceImpl implements AuthService{
         return new AuthResponse(true,"user successfully registered", user.getId(), user.getEmail());
     }
 
-    public AuthResponse validateUser(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
         String email = request.getEmail();
         String password = request.getPassword();
 
-        if(email.isBlank() || password.isBlank()) {
+        if(email == null || password == null ||
+                email.isBlank() || password.isBlank()) {
             throw new IllegalArgumentException("email and password cannot be empty");
         }
 
@@ -85,7 +87,8 @@ public class AuthServiceImpl implements AuthService{
         String email = request.getEmail();
         String username = request.getUsername();
 
-        if(email.isBlank() || userId.isBlank() || username.isBlank()) {
+        if(email == null || userId == null || username == null ||
+                email.isBlank() || userId.isBlank() || username.isBlank()) {
             throw new IllegalArgumentException("credentials cannot be empty");
         }
 
@@ -111,7 +114,8 @@ public class AuthServiceImpl implements AuthService{
         String email = request.getEmail();
         int secretPin = request.getSecretPin();
 
-        if(email.isBlank() || userId.isBlank()) {
+        if(email == null || userId == null ||
+                email.isBlank() || userId.isBlank()) {
             throw new IllegalArgumentException("credentials cannot be empty");
         }
 
